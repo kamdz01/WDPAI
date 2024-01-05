@@ -1,0 +1,51 @@
+body {
+    margin: 0;
+    margin-top: 80px;
+}
+
+nav {
+    background-color: black;
+    color: white;
+    height: 80px;
+    font-size: 1.5rem;
+    width: 100%;
+    position: fixed;
+    top: 0;
+}
+
+nav > ul {
+    gap: 2em;
+}
+
+main {
+    width: 100vw;
+    background-color: aquamarine;
+}
+
+main > .elements {
+    background-color: bisque;
+    width: calc(100vw / 3 * 2);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2em;
+    padding: 2em;
+}
+
+main > .sidebar {
+    background-color: blueviolet;
+    width: calc(100vw / 3 * 1);
+    align-self: start;
+}
+
+.elements > .container > img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+}
+
+.flex-row-center-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

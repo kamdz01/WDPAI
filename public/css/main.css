@@ -1,0 +1,141 @@
+body {
+    background-color: #031400;
+}
+
+#main {
+    margin: auto;
+    width: 350px;
+}
+
+#column {
+    margin: auto;
+    width: 350px;
+    align-self: center;
+    text-align: center;
+}
+
+#return_btn {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border-radius: 10%;
+    border: 1px solid #73AD21;
+}
+
+#return_btn h2 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#header {
+    width: 100%;
+    text-align: center;
+    color: #E0FFDF;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Arial;
+    padding-top: 30px;
+    margin-bottom: -20px;
+}
+
+#sub_header {
+    width: 100%;
+    text-align: center;
+    color: #E0FFDF;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Arial;
+}
+
+h1 {
+    text-align: inherit;
+    font-weight: inherit;
+    margin: inherit;
+}
+
+h6 {
+    text-align: inherit;
+    font-weight: inherit;
+    margin: inherit;
+}
+
+.logo_big img {
+    width: 100%;
+    margin-top: -20px;
+}
+
+.logo_medium img {
+    width: 30%;
+}
+
+.button_big {
+    width: 330px;
+    height: 55px;
+    text-align: center;
+    margin: 15px auto 5px auto;
+    line-height: 55px;
+    text-decoration: none;
+    font-family: Arial;
+    font-size: medium;
+    border-radius: 8px;
+}
+
+.button_green {
+    background-color: #296F1D;
+    color: white;
+}
+
+.button_white {
+    background-color: white;
+    color: black;
+}
+
+.hyperlink_regular {
+    height: 55px;
+    margin: 15px auto 5px auto;
+    line-height: 55px;
+    text-align: center;
+    color: #35C2C1;
+    font-family: Arial;
+    text-decoration: underline;
+}
+
+.input_big {
+    width: 330px;
+    height: 55px;
+    text-align: center;
+    font-size: medium;
+    margin: 15px auto 5px auto;
+    line-height: 55px;
+    text-decoration: none;
+    font-family: Arial;
+    border-radius: 8px;
+}
+
+.text_normal {
+    width: 330px;
+    text-align: center;
+    color: #E0FFDF;
+    font-family: Arial;
+}
+
+.right_aligned {
+    width: auto;
+    margin-right: 10px;
+    text-align: right;
+}
+
+.messages {
+    padding-top: 10px;
+    color: rgb(255, 136, 136);
+}
+
+a {
+    font-style: inherit;
+    color: inherit;
+    text-decoration: inherit;
+}
