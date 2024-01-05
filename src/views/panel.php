@@ -1,62 +1,15 @@
 <?php
 require __DIR__ . '/../repository/NoteRepo.php';
 session_start();
-global $NoteRepo;
-$NoteRepo = new NoteRepo();
+if(!isset($_SESSION['userId'])) {
+    header('Location: /');
+}
 global $userId;
 $userId = $_SESSION["userId"];
-function printNotes($userId) {
-    global $NoteRepo;
-    global $userId;
-    $notes = $NoteRepo->getNotesByUserId($userId);
-    foreach ($notes as $note) {
-        echo '<div class="text-box">';
-        echo '<h2>' . htmlspecialchars($note['note_title']) . '</h2>';
-        echo '<p>' . nl2br(htmlspecialchars($note['note_content'])) . '</p>';
-        if ($note['note_role_id'] == "1") {
-            echo '<button type="button" class="delete-button" data-note-id="' . htmlspecialchars($note['note_id']) . '">Delete</button>';
-        }
-        echo '</div>';
-    }
-}
+global $NoteRepo;
+$NoteRepo = new NoteRepo();
 
-function test() {
-    global $NoteRepo;
-    $NoteRepo->addNewNoteWithRole("1", "test_auto", "content_auto", "1");
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'delete') {
-    $noteId = $_POST['note_id'] ?? null;
-    if ($noteId && $NoteRepo->deleteNote($noteId)) {
-        echo json_encode(['success' => true]);
-    } else {
-        echo json_encode(['success' => false]);
-    }
-    exit;
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($_POST['action'] === 'add') {
-        $noteTitle = $_POST['note_title'] ?? '';
-        $noteContent = $_POST['note_content'] ?? '';
-
-        $newNoteId = $NoteRepo->addNewNoteWithRole($_SESSION["userId"], $noteTitle, $noteContent, "1");
-
-        if ($newNoteId) {
-            echo json_encode(['success' => true, 'message' => 'Note added successfully!', 'note_id' => $newNoteId]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to add note.']);
-        }
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Invalid action.']);
-    }
-    exit;
-}
-
-function test_del() {
-    global $NoteRepo;
-    return $NoteRepo->deleteNote("2");
-}
+require __DIR__ . '/../utilities/panel_utilities.php';
 ?>
 
 <!DOCTYPE html>
@@ -69,19 +22,33 @@ function test_del() {
 <script src="../src/js/panel.js"></script>
 </head>
 <body>
+
+    <!-- Add Note Modal -->
     <div id="note-form-modal" class="modal">
         <div class="modal-content">
+            <form id="new-note-form" class="new-note-form">
+            <button type="submit" class="submit-btn">Add Note</button>
             <span id="close-modal-btn" class="close-btn">&times;</span>
-            <form id="new-note-form">
-                <input type="text" id="note-title" name="note_title" placeholder="Note Title" required>
-                <textarea id="note-content" name="note_content" placeholder="Note Content" required></textarea>
+                <input type="text" id="note-title" class="note-title" name="note_title" placeholder="Note Title" required>
+                <textarea rows="30" id="note-content" class="note-content" name="note_content" placeholder="Note Content" required></textarea>
                 <input type="hidden" id="user-id" name="user_id" value="1"> 
                 <input type="hidden" id="note-role-id" name="note_role_id" value="1"> 
-                <input type="hidden" name="action" value="add"> 
-                <button type="submit">Add Note</button>
+                <input type="hidden" name="action" value="add">   
             </form>
         </div>
     </div>
+
+    <!-- Edit Note Modal -->
+    <div id="edit-note-modal" class="modal">
+        <div class="modal-content">
+        <button id="update-note-btn" class="submit-btn">Update Note</button>
+        <span id="close-edit-modal-btn" class="close-btn">&times;</span>
+            <input type="hidden" id="edit-note-id">
+            <input type="text" id="edit-note-title" class="note-title" placeholder="Note Title" required>
+            <textarea rows="30" id="edit-note-content" class="note-content" placeholder="Note Content" required></textarea>
+        </div>
+    </div>
+
 
     <div class="topbar">
         <div class="search-box">
@@ -95,7 +62,7 @@ function test_del() {
         </div>
         <div class="topbar-icons-right">
             <button>🏠</button>
-            <a href = "logout"><div>Logout</div></a>
+            <a href = "logout"><div class="logout-btn">Logout</div></a>
         </div>
     </div>
 <div class="container">

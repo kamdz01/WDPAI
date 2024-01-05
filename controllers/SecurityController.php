@@ -1,14 +1,14 @@
 <?php
 require_once 'AppController.php';
-require_once __DIR__ . '/../src/repository/UserRepository.php';
+require_once __DIR__ . '/../src/repository/UserRepo.php';
 
 class SecurityController extends AppController
 {
-    private $userRepository;
+    private $UserRepo;
     public function __construct()
     {
         parent::__construct();
-        $this->userRepository = new UserRepository();
+        $this->UserRepo = new UserRepo();
     }
 
     public function register()
@@ -62,7 +62,7 @@ class SecurityController extends AppController
 
     public function addUser(User $newUser)
     {
-        $this->userRepository->addUser($newUser);
+        $this->UserRepo->addUser($newUser);
     }
 
     public function login()
@@ -92,17 +92,17 @@ class SecurityController extends AppController
     }
     private function getUserByEmail($email)
     {
-        return $this->userRepository->getUserByEmail($email);
+        return $this->UserRepo->getUserByEmail($email);
     }
     public function getAllUsers()
     {
-        return $this->userRepository->getAllUsers();
+        return $this->UserRepo->getAllUsers();
     }
 
     public function logout() {
         session_start();
         session_destroy();
-        header('Location: /login');
+        header('Location: /');
         exit();
     }
 }

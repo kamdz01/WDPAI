@@ -11,7 +11,8 @@ class NoteRepo extends Repository
             SELECT n.note_id, n.note_title, n.note_content, n.creation_date, n.last_modified , un.note_role_id
                 FROM notes n 
                 JOIN user_notes un ON n.note_id = un.note_id 
-                WHERE un.user_id = :userId;
+                WHERE un.user_id = :userId
+                ORDER BY n.last_modified DESC;
             '
         );
 
@@ -54,4 +55,18 @@ class NoteRepo extends Repository
 
         return true;
     }
+
+    function modifyNote($noteId, $newTitle, $newContent) {
+
+        $sql = "UPDATE notes SET note_title = :newTitle, note_content = :newContent WHERE note_id = :noteId";
+        $stmt = $this->database->connect()->prepare($sql);
+        $stmt->bindParam(':newTitle', $newTitle);
+        $stmt->bindParam(':newContent', $newContent);
+        $stmt->bindParam(':noteId', $noteId);
+
+        $stmt->execute();
+
+        return true;
+    }
+    
 }
