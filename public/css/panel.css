@@ -90,8 +90,6 @@ body {
     color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    /* max-width: 600px; */
-    /* width: auto; */
     margin: 10px;
     padding: 15px;
     font-size: 16px;
@@ -101,31 +99,68 @@ body {
 }
 
 .delete-button {
-    float: right;
     background-color: #031400;
+    float: right;
     padding: 5px 10px;
     border: none;
     border-radius: 5px;
     color: white;
+    width: 100%;
+    margin: 3px;
 }
 
 .leave-button {
-    float: right;
     background-color: #031400;
+    float: right;
     padding: 5px 10px;
     border: none;
     border-radius: 5px;
     color: white;
+    width: 100%;
+    margin: 3px;
 }
 
 .share-button {
-    float: right;
     background-color: #031400;
+    float: right;
     padding: 5px 10px;
     border: none;
     border-radius: 5px;
     color: white;
-    margin-right: 3px;
+    width: 100%;
+    margin: 3px;
+}
+
+.show-context {
+    float: right;
+    background-color: #031400;
+    opacity: 0.5;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    margin: 0;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.context-menu {
+    float: right;
+    display: none;
+    z-index: 0;
+    background-color: #031400;
+    opacity: 0.9;
+    border-radius: 5px;
+    padding: 2px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: -100px;
+    position: relative;
+}
+
+.share-form {
+    padding-top: 5px;
 }
 
 .logout-btn {
@@ -212,4 +247,41 @@ body {
     border-radius: 5px;
     border: none;
     color: white;
+}
+
+.user-to-share {
+    padding: 5px;
+    background-color: #303D2B;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.share-note-role {
+    padding: 5px;
+    background-color: #303D2B;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.delete-user-button {
+    margin: 0 10px;
+    background-color: #303D2B;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    float: right;
+    margin-bottom: 10px;
+}
+
+.current-shared-users {
+    display: flex;
+    flex-direction: column;
+}
+
+.current-shared-users div {
+    margin: 10px 0;
 }

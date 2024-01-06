@@ -6,13 +6,16 @@ function printNotes($userId) {
     $notes = $NoteRepo->getNotesByUserId($userId);
     foreach ($notes as $note) {
         echo '<div id="show-edit-form-btn" class="text-box" onclick="openEditModal(' . htmlspecialchars(json_encode($note)) . ')">';
+        echo '<p id="show-edit-form-btn" class="show-context" onclick="event.stopPropagation(); openContextMenu(' . htmlspecialchars(json_encode($note)) . ')">⁝</p>';
+        echo '<div class="context-menu" id="context-menu-' . htmlspecialchars($note['note_id']) . '">';
         if ($note['note_role_id'] == "1") {
             echo '<button type="button" class="delete-button" data-note-id="' . htmlspecialchars($note['note_id']) . '">Delete</button>';
         }
         else {
             echo '<button type="button" class="leave-button" data-note-id="' . htmlspecialchars($note['note_id']) . '">Leave</button>';
         }
-        echo '<button type="button" class="share-button" data-note-id="' . htmlspecialchars($note['note_id']) . '">Share</button>';
+        echo '<button type="button" class="share-button" data-role-id="' . htmlspecialchars($note['note_role_id']) . '" data-note-id="' . htmlspecialchars($note['note_id']) . '">Share</button>';
+        echo '</div>';
         echo '<h2>' . htmlspecialchars($note['note_title']) . '</h2>';
         echo '<p>' . nl2br(htmlspecialchars($note['note_content'])) . '</p>';
         echo '<p>' . nl2br(htmlspecialchars($note['note_id'])) . '</p>';
@@ -83,12 +86,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'getSharedUser
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'addUserToNote') {
     $noteId = $_POST['noteId'] ?? '';
-    $userIdToShare = $_POST['userIdToShare'] ?? '';
+    $userToShare = $_POST['userToShare'] ?? '';
+    $userIdToShare = $NoteRepo->getUserIdByUsername($userToShare);
     $role = $_POST['role'] ?? '';
     if ($NoteRepo->addOrUpdateUserNote($userIdToShare, $noteId, $role)) {
         echo json_encode(['success' => true, 'message' => 'Note updated successfully!']);
     } else {
         echo json_encode(['success' => false, 'message' => 'Failed to update note.']);
+    }
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'deleteUserFromNote') {
+    $noteId = $_POST['noteId'] ?? null;
+    $userToDelete = $_POST['userToDelete'] ?? null;
+    $userIdToDelete = $NoteRepo->getUserIdByUsername($userToDelete);
+    if ($noteId && $NoteRepo->deleteUserFromNote($userIdToDelete, $noteId)) {
+        echo json_encode(['success' => true]);
+    } else {
+        echo json_encode(['success' => false]);
     }
     exit;
 }

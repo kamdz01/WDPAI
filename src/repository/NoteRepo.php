@@ -132,5 +132,16 @@ class NoteRepo extends Repository
             return $users; // Return the list of users and their roles
     }
     
+    function getUserIdByUsername($username) {
+
+        $sql = "SELECT user_id FROM users WHERE login = :username";
+        $stmt = $this->database->connect()->prepare($sql);
+        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? $result['user_id'] : null;
+    }
     
 }
