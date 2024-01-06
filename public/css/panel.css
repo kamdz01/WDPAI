@@ -109,6 +109,25 @@ body {
     color: white;
 }
 
+.leave-button {
+    float: right;
+    background-color: #031400;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.share-button {
+    float: right;
+    background-color: #031400;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    margin-right: 3px;
+}
+
 .logout-btn {
     background-color: #303D2B;
     padding: 5px 10px;
@@ -119,6 +138,7 @@ body {
 
 /* Modal styles */
 .modal {
+    color: white;
     visibility: hidden;
     opacity: 0;
     position: fixed;

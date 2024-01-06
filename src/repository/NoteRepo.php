@@ -68,5 +68,69 @@ class NoteRepo extends Repository
 
         return true;
     }
+
+    function addOrUpdateUserNote($userId, $noteId, $noteRoleId) {
+
+            // Check if the user-note relation already exists
+            $checkSql = "SELECT * FROM user_notes WHERE user_id = :userId AND note_id = :noteId";
+            $checkStmt = $this->database->connect()->prepare($checkSql);
+            $checkStmt->bindParam(':userId', $userId);
+            $checkStmt->bindParam(':noteId', $noteId);
+            $checkStmt->execute();
+    
+            if ($checkStmt->fetch()) {
+                // If the relation exists, update it
+                $updateSql = "UPDATE user_notes SET note_role_id = :noteRoleId WHERE user_id = :userId AND note_id = :noteId";
+                $updateStmt = $this->database->connect()->prepare($updateSql);
+            } else {
+                // If the relation does not exist, insert a new one
+                $updateSql = "INSERT INTO user_notes (user_id, note_id, note_role_id) VALUES (:userId, :noteId, :noteRoleId)";
+                $updateStmt = $this->database->connect()->prepare($updateSql);
+            }
+    
+            $updateStmt->bindParam(':userId', $userId);
+            $updateStmt->bindParam(':noteId', $noteId);
+            $updateStmt->bindParam(':noteRoleId', $noteRoleId);
+            $updateStmt->execute();
+    
+            return true;
+    }
+    
+    function deleteUserFromNote($userId, $noteId) {
+
+            $sql = "DELETE FROM user_notes WHERE user_id = :userId AND note_id = :noteId";
+            $stmt = $this->database->connect()->prepare($sql);
+            $stmt->bindParam(':userId', $userId);
+            $stmt->bindParam(':noteId', $noteId);
+    
+            $stmt->execute();
+    
+            return true;
+    }
+
+    function getNoteRolesFromDatabase() {
+
+            $stmt = $this->database->connect()->query("SELECT note_role_id, note_role_name FROM note_roles");
+            $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            return $roles;
+    }
+
+    function getUsersAssignedToNote($noteId) {
+            $sql = "SELECT u.user_id, u.login, r.note_role_name
+                    FROM users u
+                    INNER JOIN user_notes un ON u.user_id = un.user_id
+                    INNER JOIN note_roles r ON un.note_role_id = r.note_role_id
+                    WHERE un.note_id = :noteId";
+            $stmt = $this->database->connect()->prepare($sql);
+            $stmt->bindParam(':noteId', $noteId, PDO::PARAM_INT);
+    
+            $stmt->execute();
+    
+            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            return $users; // Return the list of users and their roles
+    }
+    
     
 }

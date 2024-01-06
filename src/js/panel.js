@@ -32,6 +32,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
         //document.getElementById('edit-note-modal').style.display = "none";
     }
 
+    document.getElementById('close-share-modal-btn').onclick = function () {
+        document.getElementById('share-note-modal').classList.remove('show-modal');
+        //document.getElementById('edit-note-modal').style.display = "none";
+    }
+
     window.openEditModal = function (note) {
         document.getElementById('edit-note-id').value = note.note_id;
         document.getElementById('edit-note-title').value = note.note_title;
@@ -45,6 +50,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     window.onclick = function(event) {
         const addModal = document.getElementById('note-form-modal');
         const editModal = document.getElementById('edit-note-modal');
+        const shareModal = document.getElementById('share-note-modal');
 
         if (event.target === addModal) {
             //addModal.style.display = 'none';
@@ -53,6 +59,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (event.target === editModal) {
             //editModal.style.display = 'none';
             document.getElementById('edit-note-modal').classList.remove('show-modal');
+        }
+        if (event.target === shareModal) {
+            //editModal.style.display = 'none';
+            document.getElementById('share-note-modal').classList.remove('show-modal');
         }
     };
 
@@ -79,6 +89,33 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             this.parentElement.remove();
                         } else {
                             alert('There was an error deleting the note.');
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            }
+        });
+    });
+
+    document.querySelectorAll('.leave-button').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.stopPropagation();
+            const noteId = this.getAttribute('data-note-id');
+            if (confirm('Are you sure you want to leave this note?')) {
+                fetch('panel', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'action=leave&note_id=' + noteId
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            this.parentElement.remove();
+                        } else {
+                            alert('There was an error leaving the note.');
                         }
                     })
                     .catch((error) => {
@@ -133,5 +170,88 @@ document.addEventListener('DOMContentLoaded', (event) => {
             })
             .catch(error => console.error('Error:', error));
     });
+
+    document.getElementById('share-note-btn').addEventListener('click', () => {
+        const noteId = document.getElementById('share-note-id').value;
+        const userIdToShare = document.getElementById('user-to-share').value;
+        const role = document.getElementById('share-note-role').value;
+
+        fetch('panel', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `action=addUserToNote&noteId=${noteId}&userIdToShare=${userIdToShare}&role=${role}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('User added to note successfully');
+                // Update the UI
+                const sharedUsersContainer = document.getElementById('current-shared-users');
+                fetch('panel', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'action=getSharedUsers&noteId=' + noteId
+                })
+                .then(response => response.json())
+                .then(users => {
+                    sharedUsersContainer.innerHTML = '<h3>Current Shared Users:</h3>';
+                    users.forEach(user => {
+                        sharedUsersContainer.innerHTML += `<p>User ID: ${user.user_id}, Username: ${user.login}, Role: ${user.note_role_name}</p>`;
+                    });
+                })
+                .catch(error => console.error('Error:', error));  
+            } else {
+                console.error('Failed to add user to note');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+    document.querySelectorAll('.share-button').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.stopPropagation();
+            document.getElementById('share-note-modal').classList.add('show-modal');
+            document.getElementById('share-note-id').value = this.getAttribute('data-note-id');
+            fetch('panel', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'action=fetch_roles'
+            })
+            .then(response => response.json())
+            .then(roles => {
+                const rolesDropdown = document.getElementById('share-note-role');
+                rolesDropdown.innerHTML = ''; // Clear existing options
+                roles.forEach(role => {
+                    rolesDropdown.innerHTML += `<option value="${role.note_role_id}">${role.note_role_name}</option>`;
+                });
+            })
+            .catch(error => console.error('Error:', error));
+
+            const sharedUsersContainer = document.getElementById('current-shared-users');
+            const noteId = this.getAttribute('data-note-id');
+            fetch('panel', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'action=getSharedUsers&noteId=' + noteId
+            })
+            .then(response => response.json())
+            .then(users => {
+                sharedUsersContainer.innerHTML = '<h3>Current Shared Users:</h3>';
+                users.forEach(user => {
+                    sharedUsersContainer.innerHTML += `<p>User ID: ${user.user_id}, Username: ${user.login}, Role: ${user.note_role_name}</p>`;
+                });
+            })
+            .catch(error => console.error('Error:', error));       
+        });
+    });
+
     // AJAX API END ----------------------------------------------------------------------
 });

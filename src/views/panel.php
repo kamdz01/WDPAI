@@ -49,6 +49,24 @@ require __DIR__ . '/../utilities/panel_utilities.php';
         </div>
     </div>
 
+    <!-- Share Note Modal -->
+    <div id="share-note-modal" class="modal">
+        <div class="modal-content">
+        <span id="close-share-modal-btn" class="close-btn">&times;</span>
+            <h2>Share Note</h2>
+            <div id="current-shared-users">
+                <!-- List of current shared users will be populated here -->
+            </div>
+            <input type="hidden" id="share-note-id">
+            <label for="user-to-share">User to Share With:</label>
+            <input type="text" id="user-to-share" placeholder="Enter User ID">
+            <label for="share-note-role">Role:</label>
+            <select id="share-note-role">
+                <!-- List of roles will be populated here -->
+            </select>
+            <button id="share-note-btn">Share Note</button>
+        </div>
+    </div>
 
     <div class="topbar">
         <div class="search-box">
