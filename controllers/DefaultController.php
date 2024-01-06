@@ -20,6 +20,10 @@ class DefaultController extends AppController
     {
         $this->render('panel');
     }
+    public function admin()
+    {
+        $this->render('admin');
+    }
     public function index()
     {
         $this->render('main');

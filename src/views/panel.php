@@ -74,13 +74,13 @@ require __DIR__ . '/../utilities/panel_utilities.php';
             <input type="text" placeholder="Search...">
         </div>
         <div class="topbar-icons">
-            <button>🏠</button>
+            <a href="panel"><button>🏠</button></a>
             <button id="show-form-btn">➕</button>
             <button>❤️</button>
             <button>⚙️</button>
         </div>
         <div class="topbar-icons-right">
-            <button>🏠</button>
+            <a href = "admin"><div class="logout-btn">Admin</div></a>
             <a href = "logout"><div class="logout-btn">Logout</div></a>
         </div>
     </div>

@@ -9,6 +9,7 @@ Routing::get('register', 'SecurityController');
 Routing::post('login', 'SecurityController');
 Routing::post('logout', 'SecurityController');
 Routing::get('panel', 'DefaultController');
+Routing::get('admin', 'DefaultController');
 
 
 Routing::run($path);

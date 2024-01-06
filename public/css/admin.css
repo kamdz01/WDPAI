@@ -1,0 +1,150 @@
+body {
+    background-color: #031400;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    height: 100%;
+    color: white;
+    justify-content: center;
+}
+
+.topbar {
+    height: 70px;
+    background-color: #040E00;
+    display: flex;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding-left: 10px;
+    padding-right: 20px;
+}
+
+.search-box {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.search-box input {
+    width: 100%;
+    max-width: 350px;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 15px;
+}
+
+.topbar-icons {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.topbar-icons button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.topbar-icons-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.topbar-icons-right a, .topbar-icons a {
+    text-decoration: none;
+}
+
+.logout-btn {
+    background-color: #303D2B;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+
+.topbar-icons-right button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.content {
+    color: white;
+}
+
+.admin-panel {
+    margin-top: 20px;
+    background-color: #040E00;
+    padding: 20px;
+    border-radius: 10px;
+    width: fit-content;
+}
+
+.admin-panel h2 {
+    text-align: center;
+}
+
+.search-input {
+    padding: 10px;
+    background-color: #303D2B;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 10px;
+    color: white;
+    margin: 0 10px;
+}
+
+.search-btn {
+    background-color: #303D2B;
+    float: right;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    margin: 0 10px;
+}
+
+.user-update-section {
+    padding: 10px;
+}
+
+.role-select {
+    padding: 5px;
+    background-color: #303D2B;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.update-role-btn {
+    background-color: #303D2B;
+    float: right;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    margin: 0 10px;
+    padding: 5px;
+}
+
+.delete-user-btn {
+    background-color: #303D2B;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+.user-update-section p span {
+    font-weight: bold;
+}

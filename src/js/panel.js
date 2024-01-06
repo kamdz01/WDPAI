@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            this.parentElement.remove();
+                            this.parentElement.parentElement.remove();
                         } else {
                             alert('There was an error deleting the note.');
                         }
