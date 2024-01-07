@@ -43,23 +43,23 @@ require __DIR__ . '/../utilities/admin_utilities.php';
             </form>
         </div>
     </div>
-    <div class="topbar">
-        <div class="search-box">
+    <div class="search-box">
             <input type="text" placeholder="Search...">
         </div>
+        <div class="topbar-mobile"></div>
+    <div class="topbar">
         <div class="topbar-icons">
             <a href="panel"><span class="material-symbols-outlined">home</span></a>
             <a><span id="show-form-btn" class="material-symbols-outlined">add_circle</span></a>
-            <!-- <button id="show-form-btn">➕</button> -->
             <a><span class="material-symbols-outlined inactive">favorite</span></a>
             <a><span class="material-symbols-outlined inactive">settings</span></a>
         </div>
-        <div class="topbar-icons-right">
+    </div>
+    <div class="topbar-icons-right">
             <?php
             echo '<img onclick="event.stopPropagation(); openPersonMenu()" id="person-img" class="person-img" src="'. $UserRepo->getUserImg($userId). '" alt="">'
             ?>
         </div>
-    </div>
     <div id="person-context" class="person-context">
             <?php
             if ($UserRepo->getUserRoleByUserId($userId) === 1) {
@@ -67,6 +67,6 @@ require __DIR__ . '/../utilities/admin_utilities.php';
             }
             ?>
             <a href = "logout"><div class="person-btn">Logout</div></a>
-        </div>
+    </div>
 </body>
 </html>

@@ -6,6 +6,7 @@ body {
 .container {
     display: flex;
     height: 100%;
+    margin-top: 70px;
     color: white;
     justify-content: center;
 }
