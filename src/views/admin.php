@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../repository/NoteRepo.php';
 require_once __DIR__ . '/../repository/UserRepo.php';
-session_start();
+if(session_status() !== PHP_SESSION_ACTIVE) session_start();
 if(!isset($_SESSION['userId'])) {
     header('Location: /');
 }
@@ -27,24 +27,14 @@ require __DIR__ . '/../utilities/admin_utilities.php';
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Note-taking Application</title>
 <link rel = "stylesheet" href = "../public/css/admin.css"/>
+<script src="../src/js/addNote.js"></script>
 <script src="../src/js/admin.js"></script>
 </head>
 <body>
-    <div class="topbar">
-        <div class="search-box">
-            <input type="text" placeholder="Search...">
-        </div>
-        <div class="topbar-icons">
-            <a href="panel"><button>🏠</button></a>
-            <button id="show-form-btn">➕</button>
-            <button>❤️</button>
-            <button>⚙️</button>
-        </div>
-        <div class="topbar-icons-right">
-        <a href = "admin"><div class="logout-btn">Admin</div></a>
-            <a href = "logout"><div class="logout-btn">Logout</div></a>
-        </div>
-    </div>
+
+    <?php
+        include 'topbar.php';
+    ?>
 
 <div class="container">
 <div id="admin-panel" class="admin-panel">
@@ -71,9 +61,6 @@ require __DIR__ . '/../utilities/admin_utilities.php';
             <button id="delete-user-btn" class="delete-user-btn">Delete User</button>
         </div>
     </div>
-</div>
-</div>
-    </main>
 </div>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/../repository/NoteRepo.php';
-session_start();
+if(session_status() !== PHP_SESSION_ACTIVE) session_start();
 if(!isset($_SESSION['userId'])) {
     header('Location: /');
 }
@@ -19,24 +19,14 @@ require __DIR__ . '/../utilities/panel_utilities.php';
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Note-taking Application</title>
 <link rel = "stylesheet" href = "../public/css/panel.css"/>
+<script src="../src/js/addNote.js"></script>
 <script src="../src/js/panel.js"></script>
 </head>
 <body>
 
-    <!-- Add Note Modal -->
-    <div id="note-form-modal" class="modal">
-        <div class="modal-content">
-            <form id="new-note-form" class="new-note-form">
-            <button type="submit" class="submit-btn">Add Note</button>
-            <span id="close-modal-btn" class="close-btn">&times;</span>
-                <input type="text" id="note-title" class="note-title" name="note_title" placeholder="Note Title" required>
-                <textarea rows="30" id="note-content" class="note-content" name="note_content" placeholder="Note Content" required></textarea>
-                <input type="hidden" id="user-id" name="user_id" value="1"> 
-                <input type="hidden" id="note-role-id" name="note_role_id" value="1"> 
-                <input type="hidden" name="action" value="add">   
-            </form>
-        </div>
-    </div>
+    <?php
+        include 'topbar.php';
+    ?>
 
     <!-- Edit Note Modal -->
     <div id="edit-note-modal" class="modal">
@@ -69,29 +59,12 @@ require __DIR__ . '/../utilities/panel_utilities.php';
         </div>
     </div>
 
-    <div class="topbar">
-        <div class="search-box">
-            <input type="text" placeholder="Search...">
-        </div>
-        <div class="topbar-icons">
-            <a href="panel"><button>🏠</button></a>
-            <button id="show-form-btn">➕</button>
-            <button>❤️</button>
-            <button>⚙️</button>
-        </div>
-        <div class="topbar-icons-right">
-            <a href = "admin"><div class="logout-btn">Admin</div></a>
-            <a href = "logout"><div class="logout-btn">Logout</div></a>
-        </div>
-    </div>
 <div class="container">
     <main class="content">
         <!-- Full note content -->
         <div class="note-full">
             <?php
             printNotes($userId);
-            //test();
-            //test_del();
             ?>
         </div>
     </main>
