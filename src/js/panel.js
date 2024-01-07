@@ -54,6 +54,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
             document.getElementById('current-shared-users').innerHTML = '<h4>Current Shared Users:</h4>';
         }
 
+        document.getElementById('person-context').classList.remove('show-modal');
+
         document.querySelectorAll('.context-menu').forEach(menu => {
             menu.style.display = 'none';
         });

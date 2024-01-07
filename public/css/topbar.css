@@ -23,16 +23,6 @@
     border-radius: 15px;
 }
 
-.logout-btn {
-    background-color: #303D2B;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    margin-left: 5px;
-}
-
-
 .topbar-icons {
     flex: 1;
     display: flex;
@@ -48,6 +38,10 @@
     cursor: pointer;
     height: 100%;
     margin: 5px;
+}
+
+.inactive {
+    color: gray !important;
 }
 
 .topbar-icons-right {
@@ -66,5 +60,50 @@
 }
 
 .topbar-icons-right a, .topbar-icons a {
+    text-decoration: none;
+}
+
+.person-img {
+    margin-left: 5px;
+    margin-right: 10px;
+    height: 35px;
+    border-radius: 100%;
+    border: solid;
+    border-color: #296F1D;
+    border-width: 4px;
+}
+
+.person-context {
+    margin-left: -100px;
+    margin-right: 10px;
+    padding: 0 10px;
+    background-color: #1d201c;
+    z-index: 1;
+    position: relative;
+    float: right;
+    border-radius: 10px;
+    opacity: 0;
+    
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s, transform 0.3s;
+    transform: translateY(-10px);
+}
+
+.person-context.show-modal {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.person-btn {
+    background-color: #303D2B;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    margin: 10px 0;
+}
+
+.person-context a {
     text-decoration: none;
 }

@@ -24,6 +24,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (event.target === addModal) {
             document.getElementById('note-form-modal').classList.remove('show-modal');
         }
+
+        document.getElementById('person-context').classList.remove('show-modal');
     };
 
     document.getElementById('new-note-form').addEventListener('submit', function (event) {
@@ -46,4 +48,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
             })
             .catch(error => console.error('Error:', error));
     });
+
+    window.openPersonMenu = function () {
+        const contextMenu = document.getElementById('person-context');
+        if (contextMenu.classList.contains('show-modal'))
+        {
+            contextMenu.classList.remove('show-modal');
+        }
+        else {
+            contextMenu.classList.add('show-modal');
+        }
+    };
 });

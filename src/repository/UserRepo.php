@@ -133,5 +133,9 @@ class UserRepo extends Repository
 
         return $stmt->rowCount() > 0;
     }
+
+    function getUserImg($userId) {
+        return "../../public/data/person-placeholder-image.png";
+    }
     
 }
