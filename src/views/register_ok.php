@@ -11,7 +11,7 @@
         <div id="return_btn"><a href="/"><h2><</h2></a></div>
         <div id = "column">
             <div id = "header"><h1>Notility</h1></div>
-            <div class = "logo_medium"><img src = "../../logo2.png"/></div>
+            <div class = "logo_medium"><img src = "../../public/data/logo2.png"/></div>
             <a href = "panel"><div class = "button_big button_green">Continue to site</div></a>
         </div>
     </div>

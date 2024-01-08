@@ -11,6 +11,7 @@
     padding-right: 10px;
     position: fixed;
     z-index: 3;
+    top: 0;
 }
 
 .topbar-mobile {
@@ -42,6 +43,7 @@
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
         position: fixed;
+        top: unset;
         bottom: -1px;
     }
 
