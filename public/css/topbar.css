@@ -37,6 +37,17 @@
     top: 5px;
 }
 
+#search-input {
+    flex-grow: 1;
+}
+
+#clear-search {
+    cursor: pointer;
+    color: #aaa;
+    margin-left: -30px;
+    z-index: 5;
+}
+
 @media (max-width: 600px) {
     .topbar {
         border-bottom-left-radius: 0;

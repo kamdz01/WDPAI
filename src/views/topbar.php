@@ -44,7 +44,8 @@ require __DIR__ . '/../utilities/admin_utilities.php';
         </div>
     </div>
     <div class="search-box">
-            <input type="text" placeholder="Search...">
+    <input type="text" id="search-input" placeholder="Search...">
+    <span id="clear-search">&times;</span>
         </div>
         <div class="topbar-mobile"></div>
     <div class="topbar">
