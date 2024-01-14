@@ -125,6 +125,12 @@ class UserRepo extends Repository
     }
 
     function deleteUserById($userId) {
+
+        $sql = "DELETE FROM user_notes WHERE user_id = :userId";
+        $stmt = $this->database->connect()->prepare($sql);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+
         $sql = "DELETE FROM users WHERE user_id = :userId";
         $stmt = $this->database->connect()->prepare($sql);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);

@@ -27,8 +27,8 @@ require __DIR__ . '/../utilities/admin_utilities.php';
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Note-taking Application</title>
 <link rel = "stylesheet" href = "../public/css/admin.css"/>
-<script src="../src/js/addNote.js"></script>
-<script src="../src/js/admin.js"></script>
+<script src="../src/js/addNote.js" defer></script>
+<script src="../src/js/admin.js" defer></script>
 </head>
 <body>
 

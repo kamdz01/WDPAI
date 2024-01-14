@@ -43,7 +43,7 @@ class SecurityController extends AppController
 
         $this->addUser($user);
 
-        $user = $this->getUserByEmail($email);
+        $user = $this->UserRepo->getUserByEmail($email);
         if (!$user) {
             return $this->render('login', ['messages' => ['User with this email does not exist!']]);
         }
@@ -74,7 +74,7 @@ class SecurityController extends AppController
         $email = $_POST['login'];
         $password = $_POST['password'];
 
-        $user = $this->getUserByEmail($email);
+        $user = $this->UserRepo->getUserByEmail($email);
         if (!$user) {
             return $this->render('login', ['messages' => ['User with this email does not exist!']]);
         }
@@ -89,14 +89,6 @@ class SecurityController extends AppController
         $_SESSION["userId"] = $user->getId();
         $url = "http://$_SERVER[HTTP_HOST]";
         header("Location: {$url}/panel");
-    }
-    private function getUserByEmail($email)
-    {
-        return $this->UserRepo->getUserByEmail($email);
-    }
-    public function getAllUsers()
-    {
-        return $this->UserRepo->getAllUsers();
     }
 
     public function logout() {

@@ -23,6 +23,7 @@
     padding-right: 10px;
     position: fixed;
     z-index: 3;
+    top: 0;
 }
 
 .search-box {

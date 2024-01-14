@@ -19,8 +19,8 @@ require __DIR__ . '/../utilities/panel_utilities.php';
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Note-taking Application</title>
 <link rel = "stylesheet" href = "../public/css/panel.css"/>
-<script src="../src/js/addNote.js"></script>
-<script src="../src/js/panel.js"></script>
+<script src="../src/js/addNote.js" defer></script>
+<script src="../src/js/panel.js" defer></script>
 </head>
 <body>
 

@@ -19,7 +19,7 @@ class ErrorController
 
     private function wrongUrl()
     {
-        echo "Wrong url!";
+        include_once 'src/views/notFound.php';
         exit();
     }
 

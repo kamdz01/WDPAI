@@ -23,90 +23,155 @@ function printNotes($userId) {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'delete') {
-    $noteId = $_POST['note_id'] ?? null;
-    if ($noteId && $NoteRepo->deleteNote($noteId)) {
-        echo json_encode(['success' => true]);
-    } else {
-        echo json_encode(['success' => false]);
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'delete') {
+//     $noteId = $_POST['note_id'] ?? null;
+//     if ($noteId && $NoteRepo->deleteNote($noteId)) {
+//         echo json_encode(['success' => true]);
+//     } else {
+//         echo json_encode(['success' => false]);
+//     }
+//     exit;
+// }
+
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'leave') {
+//     global $userId;
+//     $noteId = $_POST['note_id'] ?? null;
+//     if ($noteId && $NoteRepo->deleteUserFromNote($userId, $noteId)) {
+//         echo json_encode(['success' => true]);
+//     } else {
+//         echo json_encode(['success' => false]);
+//     }
+//     exit;
+// }
+
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'add') {
+//         $noteTitle = $_POST['note_title'] ?? '';
+//         $noteContent = $_POST['note_content'] ?? '';
+
+//         $newNoteId = $NoteRepo->addNewNoteWithRole($_SESSION["userId"], $noteTitle, $noteContent, "1");
+
+//         if ($newNoteId) {
+//             echo json_encode(['success' => true, 'message' => 'Note added successfully!', 'note_id' => $newNoteId]);
+//         } else {
+//             echo json_encode(['success' => false, 'message' => 'Failed to add note.']);
+//         }
+//     exit;
+// }
+
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'fetch_roles') {
+//     $roles = $NoteRepo->getNoteRolesFromDatabase();
+//     echo json_encode($roles);
+//     exit;
+// }
+
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'modify') {
+//     $noteId = $_POST['note_id'] ?? '';
+//     $newTitle = $_POST['note_title'] ?? '';
+//     $newContent = $_POST['note_content'] ?? '';
+
+//     if ($NoteRepo->modifyNote($noteId, $newTitle, $newContent)) {
+//         echo json_encode(['success' => true, 'message' => 'Note updated successfully!']);
+//     } else {
+//         echo json_encode(['success' => false, 'message' => 'Failed to update note.']);
+//     }
+//     exit;
+// }
+
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'getSharedUsers') {
+//     $noteId = $_POST['noteId'] ?? '';
+//     $users = $NoteRepo->getUsersAssignedToNote($noteId);
+//     echo json_encode($users);
+//     exit;
+// }
+
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'addUserToNote') {
+//     $noteId = $_POST['noteId'] ?? '';
+//     $userToShare = $_POST['userToShare'] ?? '';
+//     $userIdToShare = $NoteRepo->getUserIdByUsername($userToShare);
+//     $role = $_POST['role'] ?? '';
+//     if ($NoteRepo->addOrUpdateUserNote($userIdToShare, $noteId, $role)) {
+//         echo json_encode(['success' => true, 'message' => 'Note updated successfully!']);
+//     } else {
+//         echo json_encode(['success' => false, 'message' => 'Failed to update note.']);
+//     }
+//     exit;
+// }
+
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'deleteUserFromNote') {
+//     $noteId = $_POST['noteId'] ?? null;
+//     $userToDelete = $_POST['userToDelete'] ?? null;
+//     $userIdToDelete = $NoteRepo->getUserIdByUsername($userToDelete);
+//     if ($noteId && $NoteRepo->deleteUserFromNote($userIdToDelete, $noteId)) {
+//         echo json_encode(['success' => true]);
+//     } else {
+//         echo json_encode(['success' => false]);
+//     }
+//     exit;
+// }
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    switch ($_POST['action']) {
+        case 'delete':
+            $noteId = $_POST['note_id'] ?? null;
+            echo json_encode(['success' => $noteId && $NoteRepo->deleteNote($noteId)]);
+            break;
+
+        case 'leave':
+            global $userId;
+            $noteId = $_POST['note_id'] ?? null;
+            echo json_encode(['success' => $noteId && $NoteRepo->deleteUserFromNote($userId, $noteId)]);
+            break;
+
+        case 'add':
+            $noteTitle = $_POST['note_title'] ?? '';
+            $noteContent = $_POST['note_content'] ?? '';
+            $newNoteId = $NoteRepo->addNewNoteWithRole($_SESSION["userId"], $noteTitle, $noteContent, "1");
+            echo $newNoteId ? json_encode(['success' => true, 'message' => 'Note added successfully!', 'note_id' => $newNoteId])
+                           : json_encode(['success' => false, 'message' => 'Failed to add note.']);
+            break;
+
+        case 'fetch_roles':
+            $roles = $NoteRepo->getNoteRolesFromDatabase();
+            echo json_encode($roles);
+            break;
+
+        case 'modify':
+            $noteId = $_POST['note_id'] ?? '';
+            $newTitle = $_POST['note_title'] ?? '';
+            $newContent = $_POST['note_content'] ?? '';
+            echo $NoteRepo->modifyNote($noteId, $newTitle, $newContent) ? json_encode(['success' => true, 'message' => 'Note updated successfully!'])
+                                                                       : json_encode(['success' => false, 'message' => 'Failed to update note.']);
+            break;
+
+        case 'getSharedUsers':
+            $noteId = $_POST['noteId'] ?? '';
+            $users = $NoteRepo->getUsersAssignedToNote($noteId);
+            echo json_encode($users);
+            break;
+
+        case 'addUserToNote':
+            $noteId = $_POST['noteId'] ?? '';
+            $userToShare = $_POST['userToShare'] ?? '';
+            $userIdToShare = $NoteRepo->getUserIdByUsername($userToShare);
+            $role = $_POST['role'] ?? '';
+            echo $NoteRepo->addOrUpdateUserNote($userIdToShare, $noteId, $role) ? json_encode(['success' => true, 'message' => 'Note updated successfully!'])
+                                                                             : json_encode(['success' => false, 'message' => 'Failed to update note.']);
+            break;
+
+        case 'deleteUserFromNote':
+            $noteId = $_POST['noteId'] ?? null;
+            $userToDelete = $_POST['userToDelete'] ?? null;
+            $userIdToDelete = $NoteRepo->getUserIdByUsername($userToDelete);
+            echo json_encode(['success' => $noteId && $NoteRepo->deleteUserFromNote($userIdToDelete, $noteId)]);
+            break;
+
+        default:
+            echo json_encode(['success' => false, 'message' => 'Invalid action']);
+            break;
     }
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'leave') {
-    global $userId;
-    $noteId = $_POST['note_id'] ?? null;
-    if ($noteId && $NoteRepo->deleteUserFromNote($userId, $noteId)) {
-        echo json_encode(['success' => true]);
-    } else {
-        echo json_encode(['success' => false]);
-    }
-    exit;
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'add') {
-        $noteTitle = $_POST['note_title'] ?? '';
-        $noteContent = $_POST['note_content'] ?? '';
-
-        $newNoteId = $NoteRepo->addNewNoteWithRole($_SESSION["userId"], $noteTitle, $noteContent, "1");
-
-        if ($newNoteId) {
-            echo json_encode(['success' => true, 'message' => 'Note added successfully!', 'note_id' => $newNoteId]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to add note.']);
-        }
-    exit;
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'fetch_roles') {
-    $roles = $NoteRepo->getNoteRolesFromDatabase();
-    echo json_encode($roles);
-    exit;
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'modify') {
-    $noteId = $_POST['note_id'] ?? '';
-    $newTitle = $_POST['note_title'] ?? '';
-    $newContent = $_POST['note_content'] ?? '';
-
-    if ($NoteRepo->modifyNote($noteId, $newTitle, $newContent)) {
-        echo json_encode(['success' => true, 'message' => 'Note updated successfully!']);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Failed to update note.']);
-    }
-    exit;
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'getSharedUsers') {
-    $noteId = $_POST['noteId'] ?? '';
-    $users = $NoteRepo->getUsersAssignedToNote($noteId);
-    echo json_encode($users);
-    exit;
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'addUserToNote') {
-    $noteId = $_POST['noteId'] ?? '';
-    $userToShare = $_POST['userToShare'] ?? '';
-    $userIdToShare = $NoteRepo->getUserIdByUsername($userToShare);
-    $role = $_POST['role'] ?? '';
-    if ($NoteRepo->addOrUpdateUserNote($userIdToShare, $noteId, $role)) {
-        echo json_encode(['success' => true, 'message' => 'Note updated successfully!']);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Failed to update note.']);
-    }
-    exit;
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'deleteUserFromNote') {
-    $noteId = $_POST['noteId'] ?? null;
-    $userToDelete = $_POST['userToDelete'] ?? null;
-    $userIdToDelete = $NoteRepo->getUserIdByUsername($userToDelete);
-    if ($noteId && $NoteRepo->deleteUserFromNote($userIdToDelete, $noteId)) {
-        echo json_encode(['success' => true]);
-    } else {
-        echo json_encode(['success' => false]);
-    }
-    exit;
-}
 
 ?>
