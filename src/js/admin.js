@@ -80,7 +80,7 @@ function loadRoles() {
         .then(response => response.json())
         .then(roles => {
             const roleSelect = document.getElementById('role-select');
-            roleSelect.innerHTML = ''; // Clear previous options
+            roleSelect.innerHTML = '';
             roles.forEach(role => {
                 const option = document.createElement('option');
                 option.value = role.role_id;

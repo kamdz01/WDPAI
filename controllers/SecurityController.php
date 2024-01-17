@@ -19,25 +19,6 @@ class SecurityController extends AppController
         $login = $_POST['login'];
         $email = $_POST['email'];
         $password = $_POST['password'];
-
-        // if (empty($login)) {
-        //     throw new Exception('Username cannot be empty');
-        // }
-
-        // if (strlen($password) < 8) {
-        //     throw new Exception('Password must be at least 8 characters long');
-        // }
-
-        // if (!preg_match('/^[a-zA-Z0-9_]+$/', $login)) {
-        //     throw new Exception('Username can only contain letters, numbers, and underscores');
-        // }
-
-        // if (!preg_match('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/', $password)) {
-        //     throw new Exception('Password must contain at least one letter and one number');
-        // }
-
-        //TODO
-
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         $user = new User($login, $email, $hashedPassword);
 
@@ -48,9 +29,7 @@ class SecurityController extends AppController
             return $this->render('login', ['messages' => ['User with this email does not exist!']]);
         }
 
-        if (!($password == $user->getPassword()) && !password_verify($password, $user->getPassword())) {
-        //if (!password_verify($password, $user->getPassword())) {
-            //TODO
+        if (!password_verify($password, $user->getPassword())) {
             return $this->render('login', ['messages' => ['Wrong password!']]);
         }
         session_start();
@@ -79,9 +58,7 @@ class SecurityController extends AppController
             return $this->render('login', ['messages' => ['User with this email does not exist!']]);
         }
 
-        if (!($password == $user->getPassword()) && !password_verify($password, $user->getPassword())) {
-        //if (!password_verify($password, $user->getPassword())) {
-            //TODO
+        if (!password_verify($password, $user->getPassword())) {
             return $this->render('login', ['messages' => ['Wrong password!']]);
         }
         session_start();

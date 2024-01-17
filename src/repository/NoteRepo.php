@@ -71,7 +71,6 @@ class NoteRepo extends Repository
 
     function addOrUpdateUserNote($userId, $noteId, $noteRoleId) {
 
-            // Check if the user-note relation already exists
             $checkSql = "SELECT * FROM user_notes WHERE user_id = :userId AND note_id = :noteId";
             $checkStmt = $this->database->connect()->prepare($checkSql);
             $checkStmt->bindParam(':userId', $userId);
@@ -79,11 +78,9 @@ class NoteRepo extends Repository
             $checkStmt->execute();
     
             if ($checkStmt->fetch()) {
-                // If the relation exists, update it
                 $updateSql = "UPDATE user_notes SET note_role_id = :noteRoleId WHERE user_id = :userId AND note_id = :noteId";
                 $updateStmt = $this->database->connect()->prepare($updateSql);
             } else {
-                // If the relation does not exist, insert a new one
                 $updateSql = "INSERT INTO user_notes (user_id, note_id, note_role_id) VALUES (:userId, :noteId, :noteRoleId)";
                 $updateStmt = $this->database->connect()->prepare($updateSql);
             }
@@ -129,7 +126,7 @@ class NoteRepo extends Repository
     
             $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-            return $users; // Return the list of users and their roles
+            return $users;
     }
     
     function getUserIdByUsername($username) {

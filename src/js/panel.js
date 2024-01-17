@@ -1,28 +1,26 @@
-    const searchBox = document.querySelector('#search-input');
-    const clearBtn = document.querySelector('#clear-search');
+const searchBox = document.querySelector('#search-input');
+const clearBtn = document.querySelector('#clear-search');
 
-    searchBox.addEventListener('input', function() {
-        const searchText = this.value.toLowerCase();
-        const notes = document.querySelectorAll('.text-box');
+searchBox.addEventListener('input', function () {
+    const searchText = this.value.toLowerCase();
+    const notes = document.querySelectorAll('.text-box');
 
-        notes.forEach(note => {
-            // Consider both the title and content of the note in the search
-            const noteTitle = note.querySelector('h2').textContent.toLowerCase();
-            const noteContent = note.querySelector('.note-content-p').textContent.toLowerCase();
+    notes.forEach(note => {
+        const noteTitle = note.querySelector('h2').textContent.toLowerCase();
+        const noteContent = note.querySelector('.note-content-p').textContent.toLowerCase();
 
-            if (noteTitle.includes(searchText) || noteContent.includes(searchText)) {
-                note.style.display = ''; // Note matches, show it
-            } else {
-                note.style.display = 'none'; // Note does not match, hide it
-            }
-        });
+        if (noteTitle.includes(searchText) || noteContent.includes(searchText)) {
+            note.style.display = '';
+        } else {
+            note.style.display = 'none';
+        }
     });
+});
 
-    clearBtn.addEventListener('click', function() {
-        searchBox.value = '';
-        // Trigger the input event to update search results
-        searchBox.dispatchEvent(new Event('input'));
-    });
+clearBtn.addEventListener('click', function () {
+    searchBox.value = '';
+    searchBox.dispatchEvent(new Event('input'));
+});
 
 
 // MODALS UI -------------------------------------------------------------------------
