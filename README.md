@@ -67,7 +67,12 @@ Notility App is a user-friendly application designed for efficient note-taking a
    ```bash
    docker-compose up
    ```
-6. Visit `http://localhost:8080` in your web browser.
+
+6. Use pgAdmin to import provided db.sql database structure.
+
+7. Add user roles and note roles to the database.
+
+8. Visit `http://localhost:8080` in your web browser.
 
 ## Usage
 
